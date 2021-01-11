@@ -16,7 +16,16 @@ let listacoches:Coche[] =[];
 /*Clase para cada uno de los coches. Se añade aparte de los atributos definidos en 
 el enunciado la fecha de alquiler para poder llevar un contros de si el vehículo
 está o no alquilado. */
-class Coche{
+
+interface coche{
+    matricula:String;
+    modelo:String;
+    precio:number;
+    alquilar():void;
+    devolver():void;
+}
+
+class Coche implements coche{
     matricula:String;
     modelo:String;
     precio:number;
@@ -96,7 +105,10 @@ class Coche{
                    let milisegundostotal=fechadevolucion.getTime() - coche.fechaalquiler.getTime(); //tiempo en milisegundos entre la fecha actual y la de alquiler
                    let diastotal=Math.round(milisegundostotal/(1000*60*60*24)); //se pasan los milisegundos a dias 
                    campodias.value=diastotal; 
-                   campopreciototal.value=diastotal*coche.precio; //calculo del precio total del alquiler
+                    campopreciototal.value=diastotal*coche.precio; //calculo del precio total del alquiler
+                   /*En este punto, se podría poner que si un coche se alquila y se devuelve en el mismo día, se 
+                   pagase el importe correspondiente a ese día, sin embargo por políticas de la empresa podría ser que 
+                   fuese gratis, por lo tanto sin cobrar no está mal  */
 
                    botondevolver.innerText="Pagar";
                    /*Cuando se haga click en el botón para pagar, la fecha de alquiler pasa a estar nula, por lo que 
@@ -137,13 +149,13 @@ class Coche{
 let cochegenerador: Coche = new Coche("","",0,null);
 //Coches que están en el concesionario y por tanto se añaden a la lista creada anteriormente y 
 //que los incluye
-let coche1: Coche = new Coche("2356CMN","Fiat 500",25,new Date("2018/01/30 23:30:14"));
+let coche1: Coche = new Coche("2356CMN","Fiat 500",25,new Date("2020/10/30 20:30:14"));
 let coche2: Coche = new Coche("1234DPR","Seat León",40,null);
 
 listacoches.push(coche1);
 listacoches.push(coche2);
 
-//funcion que limpia todos los campos del DOM. Oculata los que sean necesarios y habilita y deshabilita los botones
+//funcion que limpia todos los campos del DOM. Oculta los que sean necesarios y habilita y deshabilita los botones
 function limpiar(){
     campomatricula.value=null;
     campomodelo.value=null;
